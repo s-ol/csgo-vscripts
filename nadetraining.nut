@@ -56,17 +56,16 @@ function nadeThink() {
 }
 
 function saveRestore( nade ) {
-	if ( lastNade != nade ) {
-		handled.append( nade.GetScriptId() );
+	if ( nadeLastNade != nade ) {
 		if ( saveMode ) {
 			ScriptPrintMessageCenterAll( "Saved" );
-			pos = nade.GetCenter();
-			vel = nade.GetVelocity();
-			saveMode = false;
+			nadePos = nade.GetCenter();
+			nadeVel = nade.GetVelocity();
+			nadeSaveMode = false;
 		} else {
-			nade.SetAbsOrigin( pos );
-			nade.SetVelocity( vel );
+			nade.SetAbsOrigin( nadePos );
+			nade.SetVelocity( nadeVel );
 		}
-		lastNade = nade;
+		nadeLastNade = nade;
 	}
 }
