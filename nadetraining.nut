@@ -57,7 +57,7 @@ function nadeThink() {
 
 function saveRestore( nade ) {
 	if ( nadeLastNade != nade ) {
-		if ( saveMode ) {
+		if ( nadeSaveMode ) {
 			ScriptPrintMessageCenterAll( "Saved" );
 			nadePos = nade.GetCenter();
 			nadeVel = nade.GetVelocity();
