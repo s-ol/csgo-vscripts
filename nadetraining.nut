@@ -68,5 +68,5 @@ function saveRestore( nade ) {
 			nade.SetVelocity( vel );
 		}
 		lastNade = nade;
-	} else
+	}
 }
