@@ -5,7 +5,7 @@
  *      script_execute nadetraining
  *	script nadeSetup()
  * 	bind "rctrl" "script nadeSavePos()"
- *	bind "ralt" "script pauseScript()"
+ *	bind "ralt" "script nadePause()"
  * Press the key (right ctrl in this case) before every nade you want save, all following nades will fly the same path
  * regardless of how you throw them. To pause the script and throw nades freely use the other bind (right alt in this case).
  */
