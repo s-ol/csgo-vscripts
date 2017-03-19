@@ -1,6 +1,6 @@
 /* nadetraining.nut
- * Popflash Training Script
- * by S0lll0s, Bidj and Rurre
+ * Nade Training Script
+ * by S0lll0s, Bidj, Rurre and Mellet
  * USAGE:
  *      script_execute nadetraining
  *	script nadeSetup()
@@ -18,8 +18,8 @@ this.nadeIsPaused	<- false;
 
 function nadeSetup() {
 	printl( @"[NT] nadetraining.nut" );
-	printl( @"[NT] Popflash Training Script" );
-	printl( @"[NT] by S0lll0s, Bidj and Rurre" );
+	printl( @"[NT] Nade Training Script" );
+	printl( @"[NT] by S0lll0s, Bidj, Rurre and Mellet" );
 	printl( @"[NT] USAGE:" );
 	printl( @"[NT] 	 bind ""ralt"" ""script nadeSavePos()""" );
 	printl( @"[NT] 	 bind ""rctrl"" ""script nadePause()""" );
@@ -44,24 +44,43 @@ function nadeSetup() {
 
 function nadeSavePos() {
 	nadeSaveMode = true;
-	ScriptPrintMessageCenterAll( "Saving next Flashbang or Grenade" );
+	ScriptPrintMessageCenterAll( "Saving next grenade" );
 }
+
 function nadeThink() {
 	local nade = null;
 
-	while ( Entities.FindByClassname(nade, "flashbang_projectile") != null ) {
-		nade = Entities.FindByClassname(nade, "flashbang_projectile");
+    while ((nade = Entities.FindByClassname(nade, "flashbang_projectile")) != null ) {
+        deleteOtherNades( nade );
+        saveRestore( nade );
+    }
+
+	nade = null;
+	while ((nade = Entities.FindByClassname(nade, "hegrenade_projectile")) != null ) {
+        deleteOtherNades( nade );
 		saveRestore( nade );
 	}
-	
-	nade = null;
-	while ( Entities.FindByClassname(nade, "hegrenade_projectile") != null ) {
-		nade = Entities.FindByClassname(nade, "hegrenade_projectile");
+
+    nade = null;
+    while ((nade = Entities.FindByClassname(nade, "incgrenade_projectile")) != null) {
+        deleteOtherNades( nade );
 		saveRestore( nade );
+	}
+
+    nade = null;
+    while ((nade = Entities.FindByClassname(nade, "molotov_projectile")) != null) {
+        deleteOtherNades( nade );
+		saveRestore( nade );
+	}
+
+    nade = null;
+    while ((nade = Entities.FindByClassname(nade, "smokegrenade_projectile")) != null) {
+        deleteOtherNades( nade );
+        saveRestore( nade );
 	}
 }
-function nadePause()
-{
+
+function nadePause() {
 	nadeIsPaused = !nadeIsPaused;
 	if ( nadeIsPaused )
 	{
@@ -70,8 +89,9 @@ function nadePause()
 		ScriptPrintMessageCenterAll( "Resuming script. Last saved grenade remembered." );
 	}
 }
+
 function saveRestore( nade ) {
-	if (!nadeIsPaused){	
+	if (!nadeIsPaused){
 		if ( nadeLastNade != nade ) {
 			if ( nadeSaveMode ) {
 				ScriptPrintMessageCenterAll( "Saved" );
@@ -85,4 +105,18 @@ function saveRestore( nade ) {
 			nadeLastNade = nade;
 		}
 	}
+}
+
+function deleteOtherNades( nade ){
+    local other = null;
+    if (other == null)
+        other = Entities.FindByClassname(null, "smokegrenade_projectile");
+    if (other == null)
+        other = Entities.FindByClassname(null, "molotov_projectile");
+    if (other == null)
+        other = Entities.FindByClassname(null, "incgrenade_projectile");
+
+    if (other != null && other != nade){
+        other.Destroy();
+    }
 }
