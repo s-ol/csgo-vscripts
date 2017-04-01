@@ -26,7 +26,6 @@ function nadeSetup() {
 	printl( @"[NT] Press the key before every nade you save, all following nades will fly the same path" );
 
 	printl( @"[NT] starting setup..." );
-	SendToConsole( @"sv_cheats 1" );
 	if (!Entities.FindByName(null, "nadeTimer"))
 	{
 		local v_nadeTimer = null;
@@ -39,7 +38,7 @@ function nadeSetup() {
 	EntFire("nadeTimer", "addoutput", "startdisabled 0");
 	EntFire("nadeTimer", "addoutput", "UseRandomTime 0");
 	EntFire("nadeTimer", "addoutput", "ontimer nadeTimer,RunScriptCode,nadeThink()");
-	printl( @"[NT] done. You can turn off sv_cheats now.");
+	printl( @"[NT] done.");
 }
 
 function nadeSavePos() {
