@@ -10,21 +10,33 @@
  * regardless of how you throw them. To pause the script and throw nades freely use the other bind (right alt in this case).
  */
 
+this.SAVE_BIND		<- "RALT";
+this.PAUSE_BIND 	<- "RCTRL";
+
 this.nadePos		<- null;
 this.nadeVel		<- null;
 this.nadeSaveMode	<- true;
 this.nadeLastNade	<- null;
 this.nadeIsPaused	<- false;
 
+SendToConsole("script nadeSetup()");
+
 function nadeSetup() {
 	printl( @"[NT] nadetraining.nut" );
 	printl( @"[NT] Nade Training Script" );
 	printl( @"[NT] by S0lll0s, Bidj, Rurre and Mellet" );
 	printl( @"[NT] USAGE:" );
-	printl( @"[NT] 	 bind ""ralt"" ""script nadeSavePos()""" );
-	printl( @"[NT] 	 bind ""rctrl"" ""script nadePause()""" );
+	printl( @"[NT]   bind ""KEY"" ""script_execute nadetraining.nut""");
+	printl( @"[NT] 	 bind ""KEY"" ""script nadeSavePos()""" );
+	printl( @"[NT] 	 bind ""KEY"" ""script nadePause()""" );
 	printl( @"[NT] Press the key before every nade you save, all following nades will fly the same path" );
-
+	printl( @"");
+	printl( @"[NT] you can change default keys in nadetraining.nut");
+	printl( @"[NT] DEFAULT KEYS:");
+	printl( @"[NT] 	"+SAVE_BIND+" = save");
+	printl( @"[NT] 	"+PAUSE_BIND+" = pause");
+	printl( @"");
+	
 	printl( @"[NT] starting setup..." );
 	if (!Entities.FindByName(null, "nadeTimer"))
 	{
@@ -39,6 +51,10 @@ function nadeSetup() {
 	EntFire("nadeTimer", "addoutput", "UseRandomTime 0");
 	EntFire("nadeTimer", "addoutput", "ontimer nadeTimer,RunScriptCode,nadeThink()");
 	printl( @"[NT] done.");
+
+	SendToConsole("bind "+SAVE_BIND+"\x22script nadeSavePos()\x22");
+	SendToConsole("bind "+PAUSE_BIND+"\x22script nadePause()\x22");
+	nadeSavePos();
 }
 
 function nadeSavePos() {
